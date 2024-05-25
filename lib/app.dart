@@ -1,3 +1,4 @@
+import 'package:bloc_timer/view/timer_page.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -5,7 +6,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return MaterialApp(
+      title: 'Flutter Timer',
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: Color.fromRGBO(72, 74, 126, 1),
+        ),
+      ),
+      home: const TimerPage(),
+    );
   }
 }
