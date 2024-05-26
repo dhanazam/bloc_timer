@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_timer/ticker.dart';
 import 'package:equatable/equatable.dart';
@@ -19,7 +19,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   final Ticker _ticker;
-  static const int _duration = 60;
+  static const int _duration = 10;
 
   StreamSubscription<int>? _tickerSubscription;
 
@@ -32,9 +32,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   void _onStarted(TimerStarted event, Emitter<TimerState> emit) {
     emit(TimerRunInProgress(event.duration));
     _tickerSubscription?.cancel();
-    _tickerSubscription = _ticker
-        .tick(ticks: event.duration)
-        .listen((duration) => add(_TimerTicked(duration: duration)));
+    _tickerSubscription =
+        _ticker.tick(ticks: event.duration).listen((duration) {
+      debugPrint('_onStarted duration: $duration');
+      add(_TimerTicked(duration: duration));
+    });
   }
 
   void _onPaused(TimerPaused event, Emitter<TimerState> emit) {
@@ -52,11 +54,13 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   void _onReset(TimerReset event, Emitter<TimerState> emit) {
+    debugPrint('_onReset _tickerSubscription: $_tickerSubscription');
     _tickerSubscription?.cancel();
     emit(const TimerInitial(_duration));
   }
 
   void _onTicked(_TimerTicked event, Emitter<TimerState> emit) {
+    debugPrint('_onTicked');
     emit(
       event.duration > 0
           ? TimerRunInProgress(event.duration)

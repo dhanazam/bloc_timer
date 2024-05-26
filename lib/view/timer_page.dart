@@ -3,7 +3,6 @@ import 'package:bloc_timer/timer/bloc/timer_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
 
@@ -16,9 +15,9 @@ class TimerPage extends StatelessWidget {
   }
 }
 
-class TimerView extends StatelessWidget{
+class TimerView extends StatelessWidget {
   const TimerView({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +66,7 @@ class Actions extends StatelessWidget {
     return BlocBuilder<TimerBloc, TimerState>(
       buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
       builder: (context, state) {
+        debugPrint('state: $state');
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
