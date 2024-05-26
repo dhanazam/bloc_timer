@@ -56,6 +56,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   void _onReset(TimerReset event, Emitter<TimerState> emit) {
     debugPrint('_onReset _tickerSubscription: $_tickerSubscription');
     _tickerSubscription?.cancel();
+    debugPrint('_onReset _duration: $_duration');
     emit(const TimerInitial(_duration));
   }
 
